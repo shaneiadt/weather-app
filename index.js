@@ -10,5 +10,7 @@ request({
   url: `${endpoint}?location=${location}&key=${apiKey}`,
   json: true
 }, (error, response, body) => {
-  pretty.log(error);
+  const lat = body.results[0].locations[0].latLng.lat;
+  const long = body.results[0].locations[0].latLng.lng;
+  pretty.log({lat,long});
 });
