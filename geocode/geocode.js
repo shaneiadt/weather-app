@@ -1,8 +1,6 @@
 const request = require('request');
 
-const pretty = require('../pretty-output');
-
-const geocodeAddress = (address) => {
+const geocodeAddress = (address, callback) => {
   const endpoint = 'http://open.mapquestapi.com/geocoding/v1/address';
   const apiKey = 'kMDHnEFHMxRtjXoEmg2pUj3TcOUt2yGA';
   const location = encodeURIComponent(address);
@@ -12,22 +10,14 @@ const geocodeAddress = (address) => {
     json: true,
   }, (error, response, body) => {
     if (error) {
-      console.log('Unable to connect to the Map Quest servers.');
+      callback('Unable to connect to the Map Quest servers.');
     } else if (body.info.statuscode !== 0) {
-      console.log('Unable to find that address.');
+      callback('Unable to find that address.');
     } else if (body.info.statuscode === 0) {
-      const providedLocation = body.results[0].providedLocation.location;
-      const {
-        lat,
-      } = body.results[0].locations[0].latLng;
-      const {
-        lng,
-      } = body.results[0].locations[0].latLng;
-
-      pretty.log({
-        providedLocation,
-        lat,
-        lng,
+      callback(undefined, {
+        address: body.results[0].providedLocation.location,
+        latitude: body.results[0].locations[0].latLng.lat,
+        longitude: body.results[0].locations[0].latLng.lng,
       });
     }
   });

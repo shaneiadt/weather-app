@@ -1,6 +1,7 @@
 const yargs = require('yargs');
 
 const geocode = require('./geocode/geocode');
+const pretty = require('./pretty-output');
 
 const {
   argv,
@@ -16,4 +17,12 @@ const {
   .help()
   .alias('help', 'h');
 
-geocode.geocodeAddress(argv.a);
+geocode.geocodeAddress(argv.a, (errorMessage, results) => {
+  if (errorMessage) {
+    console.log(errorMessage);
+  } else {
+    pretty.log({
+      results,
+    });
+  }
+});
