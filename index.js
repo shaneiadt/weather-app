@@ -1,21 +1,19 @@
-const request = require('request');
+const yargs = require('yargs');
 
-const pretty = require('./pretty-output');
+const geocode = require('./geocode/geocode');
 
-const endpoint = 'http://open.mapquestapi.com/geocoding/v1/address';
-const apiKey = 'kMDHnEFHMxRtjXoEmg2pUj3TcOUt2yGA';
-const location = `1201%20lombard%20street%20philadelphia`;
+const {
+  argv,
+} = yargs
+  .options({
+    a: {
+      demand: true,
+      alias: 'address',
+      describe: 'Address to fetch weather for',
+      string: true,
+    },
+  })
+  .help()
+  .alias('help', 'h');
 
-request({
-  url: `${endpoint}?location=${location}&key=${apiKey}`,
-  json: true
-}, (error, response, body) => {
-  const providedLocation = body.results[0].providedLocation.location;
-  const lat = body.results[0].locations[0].latLng.lat;
-  const long = body.results[0].locations[0].latLng.lng;
-  pretty.log({
-    providedLocation,
-    lat,
-    long
-  });
-});
+geocode.geocodeAddress(argv.a);
