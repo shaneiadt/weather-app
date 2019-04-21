@@ -5,6 +5,7 @@
     "quotes": ["error", "single"],
     "no-console": "off",
     "arrow-body-style":"off",
-    "arrow-parens": "off"
+    "arrow-parens": "off",
+    "linebreak-style":"off"
   }
 }
