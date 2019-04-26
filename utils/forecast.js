@@ -2,7 +2,7 @@ const request = require("request");
 
 const weatherApiKey = '985df9f0b6c055af7a814d410c079d0f';
 
-module.exports = weather = (lat, lng, callback) => {
+module.exports = forecast = (lat, lng, callback) => {
     const weatherApiEndpoint = `https://api.darksky.net/forecast/${weatherApiKey}/${lat},${lng}?units=si`;
     request({ url: weatherApiEndpoint, json: true }, (error, response) => {
         if (error) {

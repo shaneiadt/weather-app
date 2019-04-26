@@ -1,6 +1,6 @@
 const request = require("request");
 const geocode = require("./utils/geocode");
-const weather = require("./utils/weather");
+const forecast = require("./utils/forecast");
 
 geocode("Sligo", (error, data) => {
     if (error) {
@@ -8,7 +8,7 @@ geocode("Sligo", (error, data) => {
         return;
     }
     console.log(data);
-    weather(data.lat, data.lng, (error, data) => {
+    forecast(data.lat, data.lng, (error, data) => {
         if (error) {
             console.log("Error:", error);
             return;
