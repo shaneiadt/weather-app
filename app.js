@@ -2,13 +2,16 @@ const request = require("request");
 const geocode = require("./utils/geocode");
 const forecast = require("./utils/forecast");
 
-geocode("Sligo", (error, data) => {
+const location = process.argv[2];
+
+geocode(location, (error, data) => {
     if (error) {
         console.log("Error:", error);
         return;
     }
     console.log(data);
-    forecast(data.lat, data.lng, (error, data) => {
+    const {lat, lng} = data;
+    forecast(lat, lng, (error, data) => {
         if (error) {
             console.log("Error:", error);
             return;
